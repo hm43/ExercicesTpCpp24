@@ -1,6 +1,5 @@
-// Online C++ compiler to run C++ program online
-#include <iostream>
-using namespace std;
+#include <stdio.h>
+#include <stdlib.h>
 typedef struct note{
     float valeur;
     int coefficient;
@@ -9,38 +8,41 @@ typedef struct note{
 typedef struct {
     char nom[20];
     char matricule[20];
-    note *notes;
+    note notes[3];
 }etudiant;
 
-float moyenne(etudiant *e){
-    float s1 = 0, s2 = 0;
+float moyenne(etudiant e){
+    float s1 = 0;
+    float s2 = 0;
     for(int i=0; i<3; i++){
-        s1 += e->notes[i].valeur * e->notes[i].coefficient;
-        s2 += e->notes[i].coefficient;
+        s1 += e.notes[i].valeur * e.notes[i].coefficient; 
+        s2 += e.notes[i].coefficient;
     }
+
     return s1/s2;
 }
 
-int main() {
-    etudiant *et = new etudiant[3]; 
+int main()
+{
+    etudiant etudiants[3];
     for(int i=0; i<3; i++){
-        cout<<"Donner le nom: ";
-        cin>>et[i].nom;
-        cout<<"Donner le matricule: ";
-        cin>>et[i].matricule;
-        et[i].notes = new note[3];
+        printf("Donner le nom: ");
+        scanf("%s", &etudiants[i].nom);
+        printf("Donner le matricule: ");
+        scanf("%s", &etudiants[i].matricule);
         for(int j=0; j<3; j++){
-            cout<<"Donner la note: ";
-            cin>>et[i].notes[j].valeur;
-            
+            printf("Donner la note: ");
+            scanf("%f", &etudiants[i].notes[j].valeur);
+            printf("Donner le cofficient de la note: ");
+            scanf("%d", &etudiants[i].notes[j].coefficient);
+            printf("Donner le nom du module de la note: ");
+            scanf("%s", &etudiants[i].notes[j].module);
         }
-        
-    }
-    for(int i=0; i<3; i++){
-        cout<<"Le nom: "<<et[i].nom<<" Le matricule: "<<et[i].matricule<<" La moyenne est: "<<moyenne(&et[i]);
     }
     
-    delete [] et;
-
+    for(int i= 0; i<3; i++){
+        printf("Le nom est %s et le matricule %s et sa moyenne est %f\n", 
+        etudiants[i].nom, etudiants[i].matricule, moyenne(etudiants[i]));
+    }
     return 0;
 }
